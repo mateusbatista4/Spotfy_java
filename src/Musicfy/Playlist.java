@@ -1,24 +1,32 @@
 package app;
-
+import java.util.Random;
+import java.lang.Math;
+import java.util.Collections;
 import java.util.List;
 
 /**
- * Playlist
+ * PlaylistComparable<BankAccount>
  */
-public class Playlist {
+public class Playlist  {
     String name;
     String genre;
     List<Song> songs;
+    int current = 0 ;
+    boolean shuffle;
+
+
+    
     
     public void addMusic(Song song, boolean isSubscriber){
         if (isSubscriber) 
             if (this.songs.size() < 100) 
                 this.songs.add(song);
+                
             
         else 
             if (this.songs.size() < 10) 
                 this.songs.add(song);
-               
+        Collections.sort(songs);       
     }
 
     public void removeMusic(Song song){
@@ -66,4 +74,24 @@ public class Playlist {
         }
         return artist;
     }
+
+    public void setShuffle() {
+        this.shuffle = !shuffle;
+    }
+
+    public Song play(){
+
+        if(!shuffle){
+            int num = current;
+            if (current == songs.size()) current = 0;
+            return songs.get(num);
+        }else{
+            int x = (int)(Math.random()*((songs.size()-0)+1));
+            while (x == current) {
+                x = (int)(Math.random()*((songs.size()-0)+1));
+            }
+            return songs.get(x);
+        }
+    }
+
 }
